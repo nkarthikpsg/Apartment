@@ -1,5 +1,7 @@
 package com.nk.apmt.dto;
 
+import java.util.Objects;
+
 public class ApartmentDetail
 {
     String name;
@@ -113,5 +115,22 @@ public class ApartmentDetail
     public void setWalkableScore(String walkableScore)
     {
         this.walkableScore = walkableScore;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (!(o instanceof ApartmentDetail))
+            return false;
+        ApartmentDetail that = (ApartmentDetail) o;
+        return getDetailUrl().equals(that.getDetailUrl());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getDetailUrl());
     }
 }

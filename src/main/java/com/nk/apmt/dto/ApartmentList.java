@@ -1,34 +1,40 @@
 package com.nk.apmt.dto;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ApartmentList
 {
-    List<ApartmentDetail> apartmentList;
+    Collection<ApartmentDetail> apartmentList;
 
     public ApartmentList()
     {
-        this.apartmentList = new ArrayList<>();
+        this.apartmentList = new HashSet<>();
     }
 
-    public List<ApartmentDetail> getApartmentList()
+    public Collection<ApartmentDetail> getApartmentList()
     {
         return apartmentList;
     }
 
     public void addApartment(ApartmentDetail apartment)
     {
-        this.apartmentList.add(apartment);
+        if(apartment != null)
+        {
+            this.apartmentList.add(apartment);
+        }
     }
 
     public String toScreen()
     {
         List<ApartmentDetail> filteredList = apartmentList.stream()
+                .filter(a -> !"Call for Rent".equals(a.getPriceRange()))
                 .filter(a -> a.getEleSchoolRating() != "" && a.getEleSchoolRating().compareTo("6") >= 0)
+
                 .collect(Collectors.toList());
         Comparator<ApartmentDetail> comp = (a, b) -> {
             int school = a.getEleSchoolRating().compareTo(b.getEleSchoolRating());

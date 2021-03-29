@@ -50,13 +50,20 @@ public class ApartmentFilter
 
     private ApartmentDetail getApmtDetail(Element con)
     {
-        ApartmentDetail aparmentDetail = new ApartmentDetail();
+        ApartmentDetail aparmentDetail = null;
 
-        aparmentDetail.setName(con.select("span[class=js-placardTitle title]").first().text());
-        aparmentDetail.setPriceRange(con.select("div[class=price-range]").first().text());
-        aparmentDetail.setDetailUrl(con.select("a[class=property-link]").first().attr("href"));
+        if(con.select("div[class=price-range]").first() != null)
+        {
 
-        populateApmtDetail(aparmentDetail);
+            aparmentDetail = new ApartmentDetail();
+
+            aparmentDetail.setName(con.select("span[class=js-placardTitle title]").first().text());
+
+            aparmentDetail.setPriceRange(con.select("div[class=price-range]").first().text());
+            aparmentDetail.setDetailUrl(con.select("a[class=property-link]").first().attr("href"));
+
+            populateApmtDetail(aparmentDetail);
+        }
 
         return aparmentDetail;
     }
