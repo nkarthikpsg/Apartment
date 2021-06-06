@@ -81,19 +81,19 @@ public class ApartmentFilter
 
         String schoolRating = null;
         String schoolName = null;
-        Elements schoolCards = document.select("div[class=schoolCard]");
+        Elements schoolCards = document.select("div[class=profilev2SchoolCard]");
         for (Element schoolCard : schoolCards)
         {
-            if ("Public Elementary School".equals(schoolCard.select("p[class=schoolType]").text()))
+            Element elementarySchoolElement = schoolCard.selectFirst("div:containsOwn(Public Elementary School)");
+
+            if (elementarySchoolElement != null)
             {
-                Element schoolZone = schoolCard.selectFirst("div[class=nearbySchools]");
+                Element schoolZone = schoolCard.selectFirst("div[class=nearbySchools bodyTextLine]");
                 if (schoolZone.children().stream().anyMatch(e -> e.hasClass("attendanceZoneIcon")))
                 {
-                    Element ratingElement = schoolCard.selectFirst("div[class=schoolRating]");
-                    schoolRating = ratingElement.children().stream().filter(e -> e.nodeName().equals("i")).findFirst()
-                            .get().attr("class");
+                    schoolRating = schoolCard.selectFirst("div[class=schoolScore]").text();
 
-                    Element nameElement = schoolCard.selectFirst("h3[class=schoolName]");
+                    Element nameElement = schoolCard.selectFirst("div[class=title]");
                     schoolName = nameElement.selectFirst("a").text();
 
                     break;
